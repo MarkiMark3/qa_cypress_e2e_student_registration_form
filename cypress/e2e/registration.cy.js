@@ -24,7 +24,13 @@ describe('Student Registration page', () => {
       const h = $hobby.children();
       const index = Math.floor(Math.random() * h.length);
       for (let i = 0; i <= index; i++) {
-        cy.wrap(h[i]).click();
+        const used = [];
+        let option = Math.floor(Math.random() * h.length);
+        while (used.includes(option)) {
+          option = Math.floor(Math.random() * h.length);
+        }
+        used.push(option);
+        cy.wrap(h[option]).click();
       }
     });
     cy.get('.subjects-auto-complete__value-container').then(($sub) => {

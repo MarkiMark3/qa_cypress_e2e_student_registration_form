@@ -7,7 +7,7 @@ function generateUser() {
   const phone = cellGenerator();
   const dob = faker.date.birthdate();
   const day = dob.getDate().toString().padStart(2, '0');
-  const month = dob.toLocaleString('en-US', { month: 'long' });
+  const month = dob.toLocaleString('en-US', { month: 'short' });
   const year = dob.getFullYear();
   const DOB = `${day} ${month} ${year}`;
   const address = faker.location.streetAddress();
