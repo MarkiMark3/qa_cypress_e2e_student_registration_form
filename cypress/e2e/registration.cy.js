@@ -13,15 +13,28 @@ describe('Student Registration page', () => {
     cy.get('#firstName').type(user.firstName);
     cy.get('#lastName').type(user.lastName);
     cy.get('#userEmail').type(user.email);
-    cy.get('#userNumber').type(user.phone);
+    cy.get('#genterWrapper > .col-md-9').then(($gender) => {
+      const index = Math.floor(Math.random() * $gender.children().length);
+      cy.log($gender.children());
+      cy.wrap($gender.children()[index]).click();
+    });
+
     cy.get('#dateOfBirthInput').type(`{selectAll}` + user.DOB + `{Enter}`);
-    cy.get('.subjects-auto-complete__value-container').type(
-      user.letter + `{Enter}`
-    );
-    cy.get(
-      `#genterWrapper > .col-md-9 > :nth-child(${user.gender}) > .custom-control-label`
-    ).click();
-    cy.get(`#hobbiesWrapper > .col-md-9 > :nth-child(${user.gender})`).click();
+    cy.get(`#hobbiesWrapper > .col-md-9`).then(($hobby) => {
+      const h = $hobby.children();
+      const index = Math.floor(Math.random() * h.length);
+      for (let i = 0; i <= index; i++) {
+        cy.wrap(h[i]).click();
+      }
+    });
+    cy.get('.subjects-auto-complete__value-container').then(($sub) => {
+      const looper = Math.floor(Math.random() * 5);
+      const arrayOfLetters = user.letter;
+      for (let i = 0; i <= looper; i++) {
+        cy.wrap($sub).type(arrayOfLetters[i] + `{Enter}`);
+      }
+    });
+    cy.get('#userNumber').type(user.phone);
     cy.get('#currentAddress').type(user.address);
     cy.get('#state').click();
 
